@@ -2,7 +2,7 @@
 const siteMetadata = {
   title: 'Frank Starter Blog',
   author: 'Frank Mendez',
-  headerTitle: 'TailwindBlog',
+  headerTitle: 'Frank Tech Blog',
   description: 'A blog created with Next.js and Tailwind.css',
   language: 'en-us',
   theme: 'system', // system, dark or light
@@ -11,7 +11,7 @@ const siteMetadata = {
   siteLogo: '/static/images/logo.png',
   socialBanner: '/static/images/twitter-card.png',
   mastodon: 'https://mastodon.social/@mastodonuser',
-  email: 'address@yoursite.com',
+  email: 'frankmendezresources@gmail.com',
   github: 'https://github.com',
   twitter: 'https://twitter.com/Twitter',
   facebook: 'https://facebook.com',
