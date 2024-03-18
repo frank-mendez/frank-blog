@@ -3,7 +3,7 @@ const siteMetadata = {
   title: 'Frank Starter Blog',
   author: 'Frank Mendez',
   headerTitle: 'Frank Tech Blog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  description: 'A personal blog to share my thoughts and experiences.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://frank-blog-beta.vercel.app/',
@@ -12,13 +12,13 @@ const siteMetadata = {
   socialBanner: '/static/images/twitter-card.png',
   mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'frankmendezresources@gmail.com',
-  github: 'https://github.com',
+  github: 'https://github.com/frank-mendez',
   twitter: 'https://twitter.com/Twitter',
-  facebook: 'https://facebook.com',
-  youtube: 'https://youtube.com',
-  linkedin: 'https://www.linkedin.com',
+  facebook: 'https://www.facebook.com/frankmendezzz/',
+  youtube: 'https://www.youtube.com/@frankmendezph',
+  linkedin: 'https://www.linkedin.com/in/frank-mendez-47b62090/',
   threads: 'https://www.threads.net',
-  instagram: 'https://www.instagram.com',
+  instagram: 'https://www.instagram.com/frankmendezph/',
   locale: 'en-US',
   analytics: {
     // If you want to use an analytics provider you have to add it to the
