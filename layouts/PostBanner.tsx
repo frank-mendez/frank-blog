@@ -21,6 +21,10 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
   const { slug, title, images } = content
   const displayImage =
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
+  const repo = process.env.NEXT_PUBLIC_GISCUS_REPO;
+  const repoId = process.env.NEXT_PUBLIC_GISCUS_REPOSITORY_ID;
+  const category = process.env.NEXT_PUBLIC_GISCUS_CATEGORY;
+  const categoryId = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID;
 
   return (
     <SectionContainer>
@@ -42,7 +46,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
           <div className="prose max-w-none py-4 dark:prose-invert">{children}</div>
           {siteMetadata.comments && (
             <div className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300" id="comment">
-              <Comments slug={slug} />
+              <Comments  repo={repo} repoId={repoId} category={category} categoryId={categoryId} />
             </div>
           )}
           <footer>
