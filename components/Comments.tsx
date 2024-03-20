@@ -1,17 +1,23 @@
-'use client'
+'use client';
 
-import { Comments as CommentsComponent } from 'pliny/comments'
-import { useState } from 'react'
-import siteMetadata from '@/data/siteMetadata'
+import Giscus from '@giscus/react';
 
-export default function Comments({ slug }: { slug: string }) {
-  const [loadComments, setLoadComments] = useState(false)
+const Comments = ({ repo, repoId, category, categoryId }) => {
   return (
-    <>
-      {!loadComments && <button onClick={() => setLoadComments(true)}>Load Comments</button>}
-      {siteMetadata.comments && loadComments && (
-        <CommentsComponent commentsConfig={siteMetadata.comments} slug={slug} />
-      )}
-    </>
-  )
-}
+      <Giscus
+          repo={repo}
+          repoId={repoId}
+          category={category}
+          categoryId={categoryId}
+          mapping="pathname"
+          reactionsEnabled="1"
+          emitMetadata="0"
+          inputPosition="top"
+          theme="preferred_color_scheme"
+          lang="en"
+          loading="lazy"
+      />
+  );
+};
+
+export default Comments;

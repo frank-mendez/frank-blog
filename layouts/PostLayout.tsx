@@ -32,6 +32,10 @@ interface LayoutProps {
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
   const { filePath, path, slug, date, title, tags } = content
   const basePath = path.split('/')[0]
+  const repo = process.env.NEXT_PUBLIC_GISCUS_REPO;
+  const repoId = process.env.NEXT_PUBLIC_GISCUS_REPOSITORY_ID;
+  const category = process.env.NEXT_PUBLIC_GISCUS_CATEGORY;
+  const categoryId = process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID;
 
   return (
     <SectionContainer>
@@ -105,7 +109,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300"
                   id="comment"
                 >
-                  <Comments slug={slug} />
+                  <Comments  repo={repo} repoId={repoId} category={category} categoryId={categoryId} />
                 </div>
               )}
             </div>
