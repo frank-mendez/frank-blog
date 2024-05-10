@@ -1,0 +1,78 @@
+---
+title: Floyd’s Cycle Finding Algorithm
+date: '2024-05-11'
+tags: ['algorithm', 'floyd', 'cycle', 'linked list', 'hare', 'tortoise', 'pointer', 'fast', 'slow', 'loop']
+draft: false
+authors: ['default']
+summary: Floyd’s cycle finding algorithm or Hare-Tortoise algorithm is a pointer algorithm that uses only two pointers, moving through the sequence at different speeds. This algorithm is used to find a loop in a linked list. It uses two pointers one moving twice as fast as the other one. The faster one is called the fast pointer and the other one is called the slow pointer.
+---
+
+
+# Floyd’s Cycle Finding Algorithm
+I have tried answering this problem 141. Linked List Cycle from LeetCode. The problem statement is as follows:
+
+<div className="my-1 w-full">
+    ![LeetCode](/static/images/05-11-24.png)
+</div>
+
+# Intuition
+When tackling the problem of detecting a cycle in a linked list, my initial thoughts revolved around utilizing two pointers technique, specifically Floyd's Tortoise and Hare algorithm. The idea is to have two pointers traverse the linked list at different speeds—one moving one step at a time (the "slow" pointer) and the other moving two steps at a time (the "fast" pointer). If there's a cycle, the fast pointer will eventually catch up with the slow pointer. This approach ensures efficiency with O(1) space complexity since it doesn't require any additional data structures.
+
+# Approach
+To solve the problem of detecting a cycle in a linked list, I chose to implement Floyd's Tortoise and Hare algorithm. Here's a breakdown of the approach:
+
+1. **Initialization**: Start with two pointers, both pointing to the head of the linked list. We'll call them the "slow" pointer and the "fast" pointer.
+
+2. **Traverse the List**: Iterate through the linked list with the pointers. The slow pointer moves one node at a time while the fast pointer moves two nodes at a time.
+
+3. **Check for a Cycle**: At each iteration, compare the nodes pointed to by the slow and fast pointers. If they ever meet (i.e., if slow === fast), it indicates a cycle in the linked list.
+
+4. **Termination**: If the fast pointer reaches the end of the list (i.e., fast === null or fast.next === null), it means there is no cycle in the linked list.
+
+5. **Return**: If a cycle is detected during traversal, return true. Otherwise, return false once the traversal completes without finding a cycle.
+
+This approach effectively determines the presence of a cycle in the linked list while maintaining O(1) memory usage, making it both efficient and practical.
+
+# Complexity
+- Time complexity:
+The time complexity of the Floyd's Tortoise and Hare algorithm for detecting a cycle in a linked list is O(n), where n is the number of nodes in the linked list.
+
+- Space complexity:
+The space complexity of the Floyd's Tortoise and Hare algorithm for detecting a cycle in a linked list is O(1), meaning it requires constant extra space regardless of the size of the input linked list.
+
+# Code
+```
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function hasCycle(head: ListNode | null): boolean {
+
+    if (!head) return false;
+
+    let slow = head;
+    let fast = head;
+
+    while (fast && fast.next) {
+        slow = slow.next!;
+        fast = fast.next.next!;
+
+        if (slow === fast) {
+            return true; // Found a cycle
+        }
+    }
+
+    return false; // No cycle found
+};
+```
+
+## Algorithm Explanation
+Floyd’s cycle finding algorithm or Hare-Tortoise algorithm is a pointer algorithm that uses only two pointers, moving through the sequence at different speeds. This algorithm is used to find a loop in a linked list. It uses two pointers one moving twice as fast as the other one. The faster one is called the fast pointer and the other one is called the slow pointer.
