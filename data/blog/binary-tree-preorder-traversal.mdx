@@ -1,0 +1,124 @@
+---
+title: Binary Tree Preorder Traversal
+date: '2024-05-12'
+tags: ['binary tree', 'morris traversal', 'recursion', 'stack']
+draft: false
+authors: ['default']
+summary: Morris traversal is a tree traversal algorithm that does not employ the use of recursion or a stack. In this traversal, links are created as successors and nodes are printed using these links. Finally, the changes are reverted back to restore the original tree.
+---
+
+
+# Binary Tree Preorder Traversal using Morris Traversal
+Solution to Leetcode 144. Binary Tree Preorder Traversal Solved.
+
+Given the `root` of a binary tree, return the preorder traversal of its nodes' values.
+
+# Intuition
+When faced with the task of performing a preorder traversal of a binary tree in TypeScript, my initial thoughts would be to use a recursive approach. I'd start by defining a recursive function that traverses the tree in preorder fashion, visiting each node and adding its value to a result array. The function would traverse the left subtree first, then the right subtree.
+
+While recursion is a straightforward and intuitive approach, it's important to consider its limitations, especially for very large trees where deep recursion could lead to stack overflow errors. So, another thought would be to explore iterative solutions, such as using a stack to simulate the call stack of recursive function calls. This approach can help mitigate the risk of stack overflow and potentially improve the performance.
+
+Additionally, I'd consider other traversal algorithms, such as Morris Traversal, which allows for traversing the tree without using additional space, thus potentially improving both space and time complexity. However, Morris Traversal involves modifying the tree structure temporarily, so it's crucial to ensure that the original structure is restored after traversal. These would be my initial considerations when approaching the problem.
+# Approach
+My approach to solving the problem would involve implementing the preorder traversal algorithm for a binary tree in TypeScript. Here's a step-by-step description of the approach:
+
+1. **Define the TreeNode class**: First, I would define a class to represent the nodes of the binary tree. This class would have properties for the node value (`val`), left child (`left`), and right child (`right`).
+
+2. **Implement the preorderTraversal function**: Next, I would implement a function called `preorderTraversal` that takes the root node of the binary tree as input and returns an array containing the preorder traversal of the tree's nodes' values.
+
+3. **Recursive solution**: Initially, I would likely start with a recursive solution. The `preorderTraversal` function would be implemented recursively to traverse the tree in preorder fashion. It would start at the root node and visit each node in the order: current node, left subtree, right subtree.
+
+4. **Iterative solution**: After implementing the recursive solution, I would consider optimizing it by using an iterative approach. This could involve simulating the call stack of recursive function calls using a stack data structure. By iteratively traversing the tree, we can potentially improve the performance and avoid the risk of stack overflow for large trees.
+
+5. **Optimization**: If further optimization is desired, I would explore alternative traversal algorithms such as Morris Traversal. This approach allows for traversing the tree without using additional space, which can be beneficial for large trees. However, it involves modifying the tree structure temporarily, so it's essential to ensure that the original structure is restored after traversal.
+
+6. **Testing**: Throughout the implementation process, I would thoroughly test the code with various test cases to ensure its correctness and efficiency. This includes testing with different tree structures, empty trees, trees with only one node, and trees with multiple nodes.
+
+By following these steps, I would aim to create a robust and efficient solution for performing a preorder traversal of a binary tree in TypeScript.
+
+# Complexity
+- Time complexity:
+The time complexity of the preorder traversal algorithm depends on the number of nodes in the binary tree. Here's the breakdown:
+
+1. **Recursive Solution**:
+- Time Complexity: O(n)
+- In the worst case, where the binary tree is completely unbalanced and resembles a linked list, the algorithm would visit each node once, resulting in a time complexity proportional to the number of nodes (n).
+
+2. **Iterative Solution** (using a stack):
+- Time Complexity: O(n)
+- Similar to the recursive solution, the iterative solution also visits each node once. While the constant factors might differ due to the overhead of stack operations, the overall time complexity remains linear.
+
+3. **Morris Traversal**:
+- Time Complexity: O(n)
+- Morris Traversal also traverses each node once without using any additional space. It achieves this by temporarily modifying the tree structure but still visits each node in linear time.
+
+Regardless of the specific approach used, the time complexity of performing a preorder traversal of a binary tree is O(n), where n is the number of nodes in the tree. This is because the algorithm must visit each node once to produce the preorder traversal sequence.
+
+- Space complexity:
+Let's analyze the space complexity for each of the approaches:
+
+1. **Recursive Solution**:
+- Space Complexity: O(h)
+- In the recursive solution, the space complexity depends on the height of the binary tree. This is because the recursive calls consume space on the call stack. In the worst-case scenario, where the tree is unbalanced and resembles a linked list, the space complexity would be O(n), where n is the number of nodes. However, in a balanced binary tree, the space complexity would be O(log n), where n is the number of nodes and h is the height of the tree.
+
+2. **Iterative Solution** (using a stack):
+- Space Complexity: O(h)
+- In the iterative solution, we use a stack to simulate the call stack of recursive function calls. The space complexity depends on the maximum number of nodes in the stack at any point during traversal, which is determined by the height of the binary tree. Therefore, the space complexity is O(h), where h is the height of the tree.
+
+3. **Morris Traversal**:
+- Space Complexity: O(1)
+- Morris Traversal achieves constant space complexity because it doesn't require any additional data structures like stacks or queues. Instead, it modifies the tree structure temporarily to establish links between nodes. Therefore, the space complexity is O(1), regardless of the size of the tree.
+
+In summary:
+- For the recursive and iterative solutions, the space complexity is determined by the height of the tree, resulting in O(h) space complexity in the worst case.
+- For Morris Traversal, the space complexity is constant, O(1), as it doesn't use any additional space beyond the input tree itself.
+
+# Code
+```
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function preorderTraversal(root: TreeNode | null): number[] {
+    const result: number[] = [];
+    let current: TreeNode | null = root;
+
+    while (current !== null) {
+        if (current.left === null) {
+            // Visit the current node
+            result.push(current.val);
+            current = current.right;
+        } else {
+            // Find the rightmost node in the left subtree
+            let predecessor = current.left;
+            while (predecessor.right !== null && predecessor.right !== current) {
+                predecessor = predecessor.right;
+            }
+
+            if (predecessor.right === null) {
+                // Modify the right pointer of predecessor to point to the current node
+                predecessor.right = current;
+                // Visit the current node
+                result.push(current.val);
+                current = current.left;
+            } else {
+                // Revert the modification of the tree and move to the right subtree
+                predecessor.right = null;
+                current = current.right;
+            }
+        }
+    }
+
+    return result;
+};
+```
