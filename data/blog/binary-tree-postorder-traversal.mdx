@@ -1,0 +1,98 @@
+---
+title: LeetCode 145 Binary Tree Postorder Traversal Solution
+date: '2024-05-18'
+tags: ['Binary Tree', 'Morris Traversal', 'Tree Traversal', 'LeetCode', 'Medium']
+draft: false
+authors: ['default']
+summary: My first thoughts on solving the problem of postorder traversal of a binary tree involve understanding the nature of postorder traversal and the standard ways to achieve it. Here’s a step-by-step breakdown of my thought process.
+---
+
+# Binary Tree Postorder Traversal Solution
+
+My first thoughts on solving the problem of postorder traversal of a binary tree involve understanding the nature of postorder traversal and the standard ways to achieve it. Here’s a step-by-step breakdown of my thought process:
+
+1. **Understanding Postorder Traversal**: Postorder traversal is a depth-first traversal method where the nodes are visited in the order: left subtree, right subtree, and then the root node. This requires processing the entire subtree before visiting the root node.
+
+2. **Recursive Approach**:
+ - Postorder traversal is naturally suited to a recursive approach because of its depth-first nature.
+ - The recursive method would involve defining a helper function that visits the left child, then the right child, and finally processes the current node.
+
+3. **Iterative Approach**:
+ - While recursion is intuitive, it can lead to stack overflow for very deep trees due to the limitations of the call stack.
+ - An iterative approach can avoid this issue using an explicit stack to simulate the function call stack.
+ - The iterative method would involve using a stack to traverse the tree and a mechanism to ensure that each node is processed after its subtrees.
+
+4. **Handling Edge Cases**:
+ - Consider the case where the tree is empty (i.e., the root is `null`).
+ - Consider the case where the tree has only one node.
+ - Handle trees that are skewed (all nodes have only left or only right children).
+
+Given these considerations, the first concrete solution that comes to mind is to use an iterative approach with a stack for better performance and to avoid potential issues with recursion. This approach involves:
+
+- Initializing a stack and setting the current node to the root.
+- Using a loop to traverse the tree and process nodes in postorder by:
+- Traversing to the leftmost node and pushing nodes onto the stack.
+- Handling the right subtree and ensuring nodes are processed in the correct order.
+
+Here is the refined solution using an iterative approach:
+
+```typescript
+function postorderTraversal(root: TreeNode | null): number[] {
+    const result: number[] = [];
+    if (root === null) {
+        return result;
+    }
+
+    const stack: TreeNode[] = [];
+    let current: TreeNode | null = root;
+    let lastVisitedNode: TreeNode | null = null;
+
+    while (stack.length > 0 || current !== null) {
+        if (current !== null) {
+            stack.push(current);
+            current = current.left;
+        } else {
+            const peekNode: TreeNode = stack[stack.length - 1];
+            if (peekNode.right !== null && lastVisitedNode !== peekNode.right) {
+                current = peekNode.right;
+            } else {
+                result.push(peekNode.val);
+                lastVisitedNode = stack.pop()!;
+            }
+        }
+    }
+
+    return result;
+}
+```
+Let's analyze the time and space complexity of the iterative approach for postorder traversal.
+
+### Time Complexity
+
+In a binary tree, each node is visited exactly once. Here's the detailed breakdown:
+- **Initialization**: We start by initializing the stack and setting the current node to the root. This is \(O(1)\).
+- **Traversal Loop**: The while loop continues as long as there are nodes in the stack or the current node is not null. Within the loop:
+- We push nodes onto the stack and move to the left child until we reach a null node. This operation is \(O(1)\) per node.
+- When we reach a null node, we check the top node of the stack and decide whether to visit the right subtree or process the current node. Each of these operations is also \(O(1)\).
+
+Each node is pushed and popped from the stack exactly once, leading to a linear traversal of the tree.
+
+Thus, the overall time complexity is \(O(n)\), where \(n\) is the number of nodes in the binary tree.
+
+### Space Complexity
+
+The space complexity is determined by the additional space used by the stack and any auxiliary space required for the traversal.
+
+- **Stack Space**: In the worst case, the stack will hold all nodes in one path from the root to a leaf. This occurs in the case of a skewed tree (where each node has only one child). In such a case, the stack can contain up to \(n\) nodes.
+- **Auxiliary Space**: We use a few additional variables like `result`, `current`, and `lastVisitedNode`. These use \(O(1)\) space each.
+
+Thus, the space complexity is dominated by the stack space and is \(O(h)\), where \(h\) is the height of the tree. In the worst case, for a skewed tree, the height \(h\) is \(n\), leading to a space complexity of \(O(n)\). For a balanced tree, the height \(h\) is \(\log n\), leading to a space complexity of \(O(\log n)\).
+
+### Summary
+
+- **Time Complexity**: \(O(n)\), where \(n\) is the number of nodes.
+- **Space Complexity**: \(O(h)\), where \(h\) is the height of the tree. In the worst case, this can be \(O(n)\).
+
+These complexities reflect the efficiency of the iterative postorder traversal method.
+
+This approach effectively simulates the recursive postorder traversal using a stack and ensures that each node is processed after its left and right subtrees, providing an efficient solution for the problem.
